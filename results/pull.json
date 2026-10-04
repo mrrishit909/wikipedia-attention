@@ -1,0 +1,240 @@
+{
+  "pulled": "2026-10-04",
+  "user_agent_sent": "research-portfolio (Rishit Raj Mathur; github.com/mrrishit909)",
+  "files": {
+    "Easter__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Easter/daily/20160101/20260930",
+      "bytes": 561111,
+      "sha256": "e4fc8aed80059ed638affe9f55ab94025ee9310456500f61ae89786a4190b19a",
+      "days": 3926
+    },
+    "Halloween__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Halloween/daily/20160101/20260930",
+      "bytes": 573692,
+      "sha256": "7d6454f646e9ed9fa75f11dba0a9628c2deab55ee368c8d777d7ccdd8c603d4c",
+      "days": 3926
+    },
+    "Christmas__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Christmas/daily/20160101/20260930",
+      "bytes": 573626,
+      "sha256": "e2706e69609d8b3f817aeedbfc7ef2d1801ff0191a114bb70f70ac2eba4c9713",
+      "days": 3926
+    },
+    "Thanksgiving__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Thanksgiving/daily/20160101/20260930",
+      "bytes": 584976,
+      "sha256": "365ed88a7a203a4ca1ad7dd64c8c4b03845f593b4cd4a5dd46f551e6862c9e66",
+      "days": 3926
+    },
+    "Influenza__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Influenza/daily/20160101/20260930",
+      "bytes": 572888,
+      "sha256": "0b9e868e6a1254083e2c617179ee71c9b0e9f601d7d13bff02e1325e2c3201dc",
+      "days": 3926
+    },
+    "Measles__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Measles/daily/20160101/20260930",
+      "bytes": 565436,
+      "sha256": "c44150ef28ead6fa903ff41560844256c48e16befcd2aca1c8347612503c7d0b",
+      "days": 3926
+    },
+    "Solar_eclipse_of_April_8,_2024__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Solar_eclipse_of_April_8,_2024/daily/20160101/20260930",
+      "bytes": 651966,
+      "sha256": "e7bc09325a2ab0cdd16e8ab9baf7c5ff1c239b696404f0920ec9640e5e13a76a",
+      "days": 3926
+    },
+    "FIFA_World_Cup__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/FIFA_World_Cup/daily/20160101/20260930",
+      "bytes": 594330,
+      "sha256": "934386da70cb978ff46d1b4c2d0028e7e251cfc533395f4dffaed980530dabc4",
+      "days": 3926
+    },
+    "Eurovision_Song_Contest__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Eurovision_Song_Contest/daily/20160101/20260930",
+      "bytes": 628197,
+      "sha256": "6b43dd8297f3f1299b60d234370e407cd0c52eae5769f0b657f18db644d8f9a0",
+      "days": 3926
+    },
+    "Olympic_Games__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Olympic_Games/daily/20160101/20260930",
+      "bytes": 589173,
+      "sha256": "ce3980a34389f4b5cdefecad967414c36321f373c94a7fa19abf608d8e3bf87e",
+      "days": 3926
+    },
+    "Japan__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Japan/daily/20160101/20260930",
+      "bytes": 561384,
+      "sha256": "ec896dc592ebfdcc53d871767e135a659ccd2883bc266e00e9fd7eece455fa7c",
+      "days": 3926
+    },
+    "Chicago__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Chicago/daily/20160101/20260930",
+      "bytes": 565447,
+      "sha256": "a705b357899d14373117ba033875e8752c1e622c3310b36f8ac526a497617855",
+      "days": 3926
+    },
+    "Olympics__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Olympics/daily/20160101/20260930",
+      "bytes": 563316,
+      "sha256": "fe00f212ff93fe46cb310fbc99c03d845317d55c08d722e30235a73bb3508ad4",
+      "days": 3926
+    },
+    "2024_solar_eclipse__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/2024_solar_eclipse/daily/20160101/20260930",
+      "bytes": 321323,
+      "sha256": "d13cef3a528df8dc78e1f4f4df8f4895f33e988ca63e362da0417a1776e9bb9a",
+      "days": 2113
+    },
+    "Flu__user.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/Flu/daily/20160101/20260930",
+      "bytes": 542465,
+      "sha256": "e47dd7407c2d7eba8833ab15b933b9939200b5a6fc5bec024e22b4e1d1eb928b",
+      "days": 3926
+    },
+    "Easter__automated.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/automated/Easter/daily/20160101/20260930",
+      "bytes": 573435,
+      "sha256": "960649ae138528825712bd2841a493c1952e1f7c0cef2951bc11f87e53797e2c",
+      "days": 3926
+    },
+    "Halloween__automated.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/automated/Halloween/daily/20160101/20260930",
+      "bytes": 585983,
+      "sha256": "0505bd303221018678af8b570eedf8161bd7dafa8404cd651d476c411106a26d",
+      "days": 3926
+    },
+    "Christmas__automated.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/automated/Christmas/daily/20160101/20260930",
+      "bytes": 586240,
+      "sha256": "b70b17f0351457d5898df85335430b03b2af5bebeb9bd74e18a9c580680f558d",
+      "days": 3926
+    },
+    "Thanksgiving__automated.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/automated/Thanksgiving/daily/20160101/20260930",
+      "bytes": 596942,
+      "sha256": "2f9e5f8fa674cfc4a99f65b4d694b4cd804e6e450c3a69f3648602c220e705bc",
+      "days": 3926
+    },
+    "Influenza__automated.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/automated/Influenza/daily/20160101/20260930",
+      "bytes": 584758,
+      "sha256": "894042b1c93630dd6e0cc252ab569e6945c20cef5d0ded9e300e0a46234d8025",
+      "days": 3926
+    },
+    "Measles__automated.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/automated/Measles/daily/20160101/20260930",
+      "bytes": 576764,
+      "sha256": "095ac9df2dadeb84a5533cd7931f05e16e6c29d9021cebab2efbba55068ab141",
+      "days": 3926
+    },
+    "Solar_eclipse_of_April_8,_2024__automated.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/automated/Solar_eclipse_of_April_8,_2024/daily/20160101/20260930",
+      "bytes": 665334,
+      "sha256": "60c8c45a5a91d74c61efd376ac7798200812574fd6bb952aedd968603715e5f7",
+      "days": 3926
+    },
+    "FIFA_World_Cup__automated.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/automated/FIFA_World_Cup/daily/20160101/20260930",
+      "bytes": 605753,
+      "sha256": "8c83286c84d5dcb35daa50741762eeb2b4c4ffc2b83c42cfd701554136ec93e6",
+      "days": 3926
+    },
+    "Eurovision_Song_Contest__automated.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/automated/Eurovision_Song_Contest/daily/20160101/20260930",
+      "bytes": 639402,
+      "sha256": "3d2eb96c4659c27866f7debb83a8665fc4c781f1aed8aeb9830695b2b7c665ca",
+      "days": 3926
+    },
+    "Olympic_Games__automated.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/automated/Olympic_Games/daily/20160101/20260930",
+      "bytes": 601341,
+      "sha256": "76034e5eaa53c55981776f785b3648cc498a9020494369e4627667357c2ea577",
+      "days": 3926
+    },
+    "Japan__automated.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/automated/Japan/daily/20160101/20260930",
+      "bytes": 571501,
+      "sha256": "fb118c446a62587063d65649318aa7cde06f5752cefdf6877fb0608890f98454",
+      "days": 3926
+    },
+    "Chicago__automated.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/automated/Chicago/daily/20160101/20260930",
+      "bytes": 579590,
+      "sha256": "1c749859939a43eb52df0fc4541cb562952dc731e56286c0c6a3fe88901f80ae",
+      "days": 3926
+    },
+    "Easter__spider.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/spider/Easter/daily/20160101/20260930",
+      "bytes": 565453,
+      "sha256": "a4d910c120fa015700150645b0c4eb26717b0f6451ebe9c038614b3ee525e99f",
+      "days": 3926
+    },
+    "Halloween__spider.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/spider/Halloween/daily/20160101/20260930",
+      "bytes": 577486,
+      "sha256": "8756a00ea8ea858d309657678669df322efb6a524157fb7943a419bf06cdbd45",
+      "days": 3926
+    },
+    "Christmas__spider.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/spider/Christmas/daily/20160101/20260930",
+      "bytes": 577720,
+      "sha256": "79d32df6429604587c13ee5e2c14d517f151ab9a18bca663b3d97debe68b93f3",
+      "days": 3926
+    },
+    "Thanksgiving__spider.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/spider/Thanksgiving/daily/20160101/20260930",
+      "bytes": 588366,
+      "sha256": "73aa18db9e19a0429851f05281131feb56da1984a9d828820bb6f09e6d6dadd2",
+      "days": 3926
+    },
+    "Influenza__spider.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/spider/Influenza/daily/20160101/20260930",
+      "bytes": 576488,
+      "sha256": "646c1efa0625f0c1f94ad7084adb483726ac99458d7ceba89729dfb4650a3660",
+      "days": 3926
+    },
+    "Measles__spider.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/spider/Measles/daily/20160101/20260930",
+      "bytes": 568035,
+      "sha256": "c6ef76f1f4a74552f65a74f7549c82896b8fd8e27ab470443dade3ccb82ac1c3",
+      "days": 3926
+    },
+    "Solar_eclipse_of_April_8,_2024__spider.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/spider/Solar_eclipse_of_April_8,_2024/daily/20160101/20260930",
+      "bytes": 655813,
+      "sha256": "500db5b079ea9993b5d2a6d2421d614422fab3abc72ad44c8f0c6c9d58d85238",
+      "days": 3926
+    },
+    "FIFA_World_Cup__spider.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/spider/FIFA_World_Cup/daily/20160101/20260930",
+      "bytes": 597366,
+      "sha256": "15ded46e81904476c95c6545ad8e02557753e5d088281553f4890a30cc9e693b",
+      "days": 3926
+    },
+    "Eurovision_Song_Contest__spider.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/spider/Eurovision_Song_Contest/daily/20160101/20260930",
+      "bytes": 630704,
+      "sha256": "dbad71aedf2883676048eab9c3a816560c94346c90877510f68299165cc387ae",
+      "days": 3926
+    },
+    "Olympic_Games__spider.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/spider/Olympic_Games/daily/20160101/20260930",
+      "bytes": 592948,
+      "sha256": "889ba1855f5ad297114854cb8cc416ce03f25c2b428cc34b9f0b0acfbea84e3a",
+      "days": 3926
+    },
+    "Japan__spider.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/spider/Japan/daily/20160101/20260930",
+      "bytes": 563884,
+      "sha256": "1f9439f045d002076ff21927fd3cc2aba7658efebe93ca1acd4d2d6b870b5454",
+      "days": 3926
+    },
+    "Chicago__spider.json": {
+      "url": "https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/spider/Chicago/daily/20160101/20260930",
+      "bytes": 570453,
+      "sha256": "ca5d60f73701890f30c5bd41f8277e720efafb93c06078b599fbb6da2dfb7f50",
+      "days": 3926
+    }
+  }
+}

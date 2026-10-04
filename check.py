@@ -212,7 +212,7 @@ def main():
     rows = []
     for lvl, name in [("topic", t) for t in TOPICS] + [("group", g) for g in ("seasonal", "disease", "event", "evergreen", "all")]:
         s = [r for r in sp_rows if (r["topic"] == name if lvl == "topic" else name == "all" or GROUP[r["topic"]] == name)]; t10s = [r["t10"] for r in s if r["t10"] is not None]; hls = [r["halflife"] for r in s if r["halflife"] is not None]
-        rows.append({"level": lvl, "name": name, "events": len(s), "with_t10": len(t10s), "median_t10": median(t10s) if t10s else None, "t10_within_2": sum(1 for x in t10s if x <= 2), "fitted": len(hls), "median_halflife": median(hls) if hls else None})
+        rows.append({"level": lvl, "name": name, "events": len(s), "with_t10": len(t10s), "median_t10": median(t10s) if t10s else None, "t10_within_2": sum(1 for x in t10s if x <= 2), "half_next_day": sum(1 for r in s if r["half_k"] == 1), "fitted": len(hls), "median_halflife": median(hls) if hls else None})
     compare("spikes_summary", rows)
 
     # walk-forward ---------------------------------------------------------
@@ -227,7 +227,7 @@ def main():
             for p in range(366): vals = [info[k]["prof"][p] for k in prev if p in info[k]["prof"]]; prof.append(mean(vals))
             pp = argmax(smooth7(prof)); mo, dd = pos_md(pp); fd = date(Y, 2, 28) if (mo == 2 and dd == 29 and Y % 4) else date(Y, mo, dd)
             ratio = math.exp(mean([math.log(info[k]["peak"] / info[k]["base"]) for k in prev])); b1, b2 = info[Y - 1]["base"], info[Y - 2]["base"]
-            row = {"topic": t, "year": Y, "actual_doy": info[Y]["doy"], "actual_peak": info[Y]["peak"], "date_last": info[Y - 1]["doy"], "date_profile": fd.timetuple().tm_yday, "date_rule": None, "h_last": info[Y - 1]["peak"],
+            row = {"topic": t, "year": Y, "actual_doy": info[Y]["doy"], "actual_peak": info[Y]["peak"], "date_last": (date(Y, 2, 28) if (info[Y - 1]["date"].month, info[Y - 1]["date"].day) == (2, 29) and Y % 4 else date(Y, info[Y - 1]["date"].month, info[Y - 1]["date"].day)).timetuple().tm_yday, "date_profile": fd.timetuple().tm_yday, "date_rule": None, "h_last": info[Y - 1]["peak"],
                    "h_mean": math.exp(mean([math.log(info[k]["peak"]) for k in prev])), "h_ratio": b1 * ratio, "h_trend": b1 * (b1 / b2) * ratio}
             if t in ("Easter", "Thanksgiving"):
                 hol = easter_gauss if t == "Easter" else thanksgiving_count; offs = sorted((info[k]["date"] - hol(k)).days for k in prev); row["date_rule"] = (hol(Y) + timedelta(offs[(len(offs) - 1) // 2])).timetuple().tm_yday
@@ -251,6 +251,15 @@ def main():
     def corr(a, b):
         ma, mb = mean(a), mean(b); return sum((x - ma) * (y - mb) for x, y in zip(a, b)) / math.sqrt(sum((x - ma) ** 2 for x in a) * sum((y - mb) ** 2 for y in b))
 
+    def ranks(x):
+        order = sorted(range(len(x)), key=lambda i: x[i]); rk = [0.0] * len(x); i = 0
+        while i < len(order):
+            j = i
+            while j + 1 < len(order) and x[order[j + 1]] == x[order[i]]: j += 1
+            for q in range(i, j + 1): rk[order[q]] = (i + j) / 2 + 1
+            i = j + 1
+        return rk
+
     def acf(x, l):
         m = mean(x); return sum((x[t] - m) * (x[t - l] - m) for t in range(l, len(x))) / sum((v - m) ** 2 for v in x)
 
@@ -258,13 +267,13 @@ def main():
     for ia, a in enumerate(TOPICS):
         for b in TOPICS[ia + 1:]:
             r = corr(X[a], X[b]); ne = min(n, max(10, n / (1 + 2 * sum(acf(X[a], l) * acf(X[b], l) for l in range(1, 13))))); zz, se = math.atanh(r), 1 / math.sqrt(ne - 3); ev = "evergreen" in (GROUP[a], GROUP[b])
-            rows.append({"a": a, "b": b, "related": int((a, b) in RELATED or (b, a) in RELATED), "evergreen_pair": int(ev), "r_levels": corr(L[a], L[b]), "r_yoy": r, "n_eff": ne, "ci_lo": math.tanh(zz - 1.96 * se), "ci_hi": math.tanh(zz + 1.96 * se),
+            rows.append({"a": a, "b": b, "related": int((a, b) in RELATED or (b, a) in RELATED), "evergreen_pair": int(ev), "r_levels": corr(L[a], L[b]), "r_yoy": r, "r_spearman": corr(ranks(X[a]), ranks(X[b])), "n_eff": ne, "ci_lo": math.tanh(zz - 1.96 * se), "ci_hi": math.tanh(zz + 1.96 * se),
                          "r_partial": None if ev else corr(XP[a], XP[b])})
     compare("displacement", rows); dp = rows; out = []
     ten = [r for r in dp if not r["evergreen_pair"]]
     for name, s in (("related", [r for r in ten if r["related"]]), ("other pairs of the ten topics", [r for r in ten if not r["related"]]), ("all 66 pairs", dp)):
         part = [r["r_partial"] for r in s if r["r_partial"] is not None]
-        out.append({"group": name, "pairs": len(s), "mean_r_levels": mean([r["r_levels"] for r in s]), "mean_r_yoy": mean([r["r_yoy"] for r in s]), "mean_r_partial": mean(part) if part else None, "share_yoy_negative": sum(1 for r in s if r["r_yoy"] < 0) / len(s),
+        out.append({"group": name, "pairs": len(s), "mean_r_levels": mean([r["r_levels"] for r in s]), "mean_r_yoy": mean([r["r_yoy"] for r in s]), "mean_r_spearman": mean([r["r_spearman"] for r in s]), "mean_r_partial": mean(part) if part else None, "share_yoy_negative": sum(1 for r in s if r["r_yoy"] < 0) / len(s),
                     "min_r_yoy": min(r["r_yoy"] for r in s), "max_r_yoy": max(r["r_yoy"] for r in s), "share_ci_excludes_0": sum(1 for r in s if r["ci_lo"] > 0 or r["ci_hi"] < 0) / len(s)})
     compare("displacement_summary", out)
     compare("summary", [{"key": "days", "value": N}, {"key": "weeks", "value": nw}, {"key": "yoy_weeks", "value": n}, {"key": "null_date_error", "value": mean([min(k, 365 - k) for k in range(365)])}])

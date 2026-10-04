@@ -8,7 +8,7 @@ Data: counts/daily_views.csv, daily English-Wikipedia page views (agent "user") 
  Seasonality (complete years 2016-2025): the weekday effect is removed from y, then each year's mean, giving d. The seasonal profile of a day is the mean of d on the same calendar date in the other nine years (leave one year out); seasonal R2 = 1 - SSE/SST over all days. Amplitude = exp(max - min) of the mean profile, smoothed over 7 days around the year.
  Alignment: for Easter and US Thanksgiving, which move, the same score over the 61 days around the holiday, predicting a day from the same calendar date (as above) or from the same offset from the holiday in the other nine years.
  Spikes: a day with views at least 5 times the median of the previous 28 days starts an event (baseline B = that median, frozen); the peak is the largest day in the next 14; the excess is views - B on the 29 days from the peak. t10 = days until the excess falls to 10% of the peak excess; half-life = ln 2 / lambda from a least-squares line through ln(excess) from the peak to the last day above 10% (needs 4 or more days, kept only if the line falls and R2 is at least 0.8); the next event is searched for from 29 days after the peak.
- Walk-forward (years 2019-2025, each forecast using only earlier years, at least three): the annual peak = the largest day of the calendar year. Date forecasts: last year's peak date; the peak of the mean log-profile (ln v - ln year median) of earlier years, smoothed 7 days; for Easter and Thanksgiving, the holiday date plus the lower median of earlier peak offsets. Error = days apart, around the 365-day year. Height forecasts: last year's peak; the geometric mean of earlier peaks; last year's median x the geometric mean of earlier peak-to-median ratios; the same with last year's median scaled by its change on the year before. Error = |ln(forecast / actual)|.
+ Walk-forward (years 2019-2025, each forecast using only earlier years, at least three): the annual peak = the largest day of the calendar year. Date forecasts: last year's peak date (the same month and day); the peak of the mean log-profile (ln v - ln year median) of earlier years, smoothed 7 days; for Easter and Thanksgiving, the holiday date plus the lower median of earlier peak offsets. Error = days apart, around the 365-day year. Height forecasts: last year's peak; the geometric mean of earlier peaks; last year's median x the geometric mean of earlier peak-to-median ratios; the same with last year's median scaled by its change on the year before. Error = |ln(forecast / actual)|.
  Displacement: weekly sums over 560 blocks of 7 days from 1 January 2016, x = ln(week) - ln(the week 52 before) (508 weeks), Pearson correlations of x between topics, with Bartlett's effective n over 12 lags and a Fisher interval; "partial" removes each topic's regression on the mean of the two evergreen topics' x. The correlation of the plain weekly log levels is shown for comparison.
 """
 import math
@@ -48,6 +48,11 @@ def easter(y):
 
 def thanksgiving(y):
     d = date(y, 11, 1); d += timedelta((3 - d.weekday()) % 7); return d + timedelta(21)
+
+
+def same_date(d, y):
+    """the same month and day in year y (29 February becomes 28 February)"""
+    return date(y, 2, 28) if (d.month, d.day) == (2, 29) and y % 4 else date(y, d.month, d.day)
 
 
 def smooth7(p):
@@ -144,7 +149,7 @@ def main():
     for g in [("topic", t) for t in TOPICS] + [("group", g) for g in ("seasonal", "disease", "event", "evergreen", "all")]:
         s = sp[sp["topic"] == g[1]] if g[0] == "topic" else (sp if g[1] == "all" else sp[sp["topic"].map(GROUP) == g[1]])
         rows.append({"level": g[0], "name": g[1], "events": len(s), "with_t10": int(s["t10"].notna().sum()), "median_t10": s["t10"].median() if s["t10"].notna().any() else None,
-                     "t10_within_2": int((s["t10"] <= 2).sum()), "fitted": int(s["halflife"].notna().sum()), "median_halflife": s["halflife"].median() if s["halflife"].notna().any() else None})
+                     "t10_within_2": int((s["t10"] <= 2).sum()), "half_next_day": int((s["half_k"] == 1).sum()), "fitted": int(s["halflife"].notna().sum()), "median_halflife": s["halflife"].median() if s["halflife"].notna().any() else None})
     pd.DataFrame(rows).to_csv(R / "spikes_summary.csv", index=False)
 
     # walk-forward --------------------------------------------------------
@@ -159,7 +164,7 @@ def main():
             prev = [k for k in range(2016, yr)]; M = np.array([info[k]["prof"] for k in prev]); ps = smooth7(np.nanmean(M, axis=0)); pp = int(np.argmax(ps)); month = int(np.searchsorted(CUM[1:], pp, side="right")) + 1
             dd = pp - CUM[month - 1] + 1; fd = date(yr, month, dd) if not (month == 2 and dd == 29 and yr % 4) else date(yr, 2, 28); prof_doy = fd.timetuple().tm_yday
             ratio = float(np.exp(np.mean([math.log(info[k]["peak"] / info[k]["base"]) for k in prev]))); b1, b2 = info[yr - 1]["base"], info[yr - 2]["base"]
-            row = {"topic": t, "year": yr, "actual_doy": info[yr]["doy"], "actual_peak": info[yr]["peak"], "date_last": info[yr - 1]["doy"], "date_profile": prof_doy, "date_rule": None,
+            row = {"topic": t, "year": yr, "actual_doy": info[yr]["doy"], "actual_peak": info[yr]["peak"], "date_last": same_date(info[yr - 1]["date"], yr).timetuple().tm_yday, "date_profile": prof_doy, "date_rule": None,
                    "h_last": info[yr - 1]["peak"], "h_mean": float(np.exp(np.mean([math.log(info[k]["peak"]) for k in prev]))), "h_ratio": b1 * ratio, "h_trend": b1 * (b1 / b2) * ratio}
             if t in ("Easter", "Thanksgiving"):
                 hol = easter if t == "Easter" else thanksgiving; offs = sorted((info[k]["date"] - hol(k)).days for k in prev); row["date_rule"] = (hol(yr) + timedelta(offs[(len(offs) - 1) // 2])).timetuple().tm_yday
@@ -184,12 +189,12 @@ def main():
         for b in TOPICS[ia + 1:]:
             r = np.corrcoef(X[a], X[b])[0, 1]; ne = min(n, max(10, n / (1 + 2 * sum(acf(X[a], l) * acf(X[b], l) for l in range(1, LAGS + 1))))); z, se = math.atanh(r), 1 / math.sqrt(ne - 3)
             ev = GROUP[a] == "evergreen" or GROUP[b] == "evergreen"
-            rows.append({"a": a, "b": b, "related": int(frozenset((a, b)) in RELSET), "evergreen_pair": int(ev), "r_levels": np.corrcoef(L[a], L[b])[0, 1], "r_yoy": r, "n_eff": ne, "ci_lo": math.tanh(z - 1.96 * se), "ci_hi": math.tanh(z + 1.96 * se),
+            rows.append({"a": a, "b": b, "related": int(frozenset((a, b)) in RELSET), "evergreen_pair": int(ev), "r_levels": np.corrcoef(L[a], L[b])[0, 1], "r_yoy": r, "r_spearman": np.corrcoef(pd.Series(X[a]).rank().values, pd.Series(X[b]).rank().values)[0, 1], "n_eff": ne, "ci_lo": math.tanh(z - 1.96 * se), "ci_hi": math.tanh(z + 1.96 * se),
                          "r_partial": None if ev else np.corrcoef(XP[a], XP[b])[0, 1]})
     dp = pd.DataFrame(rows); dp.to_csv(R / "displacement.csv", index=False); rows = []
     ten = dp[dp["evergreen_pair"] == 0]
     for name, s in (("related", ten[ten["related"] == 1]), ("other pairs of the ten topics", ten[ten["related"] == 0]), ("all 66 pairs", dp)):
-        rows.append({"group": name, "pairs": len(s), "mean_r_levels": s["r_levels"].mean(), "mean_r_yoy": s["r_yoy"].mean(), "mean_r_partial": s["r_partial"].mean() if s["r_partial"].notna().any() else None,
+        rows.append({"group": name, "pairs": len(s), "mean_r_levels": s["r_levels"].mean(), "mean_r_yoy": s["r_yoy"].mean(), "mean_r_spearman": s["r_spearman"].mean(), "mean_r_partial": s["r_partial"].mean() if s["r_partial"].notna().any() else None,
                      "share_yoy_negative": float((s["r_yoy"] < 0).mean()), "min_r_yoy": s["r_yoy"].min(), "max_r_yoy": s["r_yoy"].max(), "share_ci_excludes_0": float(((s["ci_lo"] > 0) | (s["ci_hi"] < 0)).mean())})
     pd.DataFrame(rows).to_csv(R / "displacement_summary.csv", index=False)
 
